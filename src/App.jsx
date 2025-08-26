@@ -1,7 +1,15 @@
 import Card from "./components/card";
 import Grid from "./components/grid";
+import Table from "./components/table";
 
 function App() {
+  const users = [
+    { name: "John Doe", age: 30, city: "New York" },
+    { name: "Jane Smith", age: 25, city: "Los Angeles" },
+    { name: "Peter Jones", age: 45, city: "Chicago" },
+    { name: "Mary Williams", age: 22, city: "Houston" },
+  ];
+
   const quizzes = [
     {
       cardtitle: "Quiz on React JS",
@@ -46,8 +54,9 @@ function App() {
   ];
 
   return (
-    <div className="bg-darkbg flex justify-center items-center min-h-screen">
+    <div className="bg-linear-to-br  from-white to-zinc-900 to-75% flex justify-center items-center min-h-screen">
       <Grid items={quizzes} />
+      {/* <Table data={users} /> */}
     </div>
   );
 }

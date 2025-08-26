@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from 'react';
+import { useState } from "react";
 
 const Table = ({ data }) => {
   if (!data || data.length === 0) {
@@ -26,12 +26,12 @@ const Table = ({ data }) => {
         </thead>
         <tbody className="divide-y divide-gray-700 text-amber-50">
           {data.map((row, rowIndex) => (
-            <tr key={rowIndex} className="hover:bg-gray-700 transition-colors duration-200">
+            <tr
+              key={rowIndex}
+              className="hover:bg-gray-700 transition-colors duration-200"
+            >
               {headers.map((header, colIndex) => (
-                <td
-                  key={colIndex}
-                  className="px-4 py-2"
-                >
+                <td key={colIndex} className="px-4 py-2">
                   {row[header]}
                 </td>
               ))}
@@ -43,23 +43,4 @@ const Table = ({ data }) => {
   );
 };
 
-// The main App component to demonstrate the Table
-const App = () => {
-  const users = [
-    { name: 'John Doe', age: 30, city: 'New York' },
-    { name: 'Jane Smith', age: 25, city: 'Los Angeles' },
-    { name: 'Peter Jones', age: 45, city: 'Chicago' },
-    { name: 'Mary Williams', age: 22, city: 'Houston' },
-  ];
-
-  return (
-    <div className="flex flex-col gap-4 w-1/5 min-w-[300px] bg-gray-800 border rounded-md p-4">
-      <h1 className="text-3xl font-bold text-amber-50 mb-8">User Data</h1>
-      <div className="w-full max-w-4xl">
-        <Table data={users} />
-      </div>
-    </div>
-  );
-};
-
-export default App;
+export default Table;

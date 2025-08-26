@@ -14,7 +14,7 @@ function Card(props) {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-1/5 min-w-[300px] bg-gray-800 border rounded-md p-4">
+    <div className="flex flex-col gap-4 w-1/5 min-w-[300px] bg-radial-[at_-50%_-50%] from-white/75 from-10% to-zinc-900 to-100% border-white rounded-md p-4">
       {props.cardtitle &&
         renderItems(props.cardtitle, (title, key) => (
           <div className="flex flex-col" key={`cardtitle-${key}`}>
@@ -101,7 +101,7 @@ function Card(props) {
       {props.btntext &&
         renderItems(props.btntext, (btn, key) => (
           <button
-            className="flex justify-center items-center bg-gray-900 text-amber-50 mt-7 py-2 px-4 rounded-md hover:cursor-pointer border-0"
+            className="flex justify-center items-center bg-stone-200/50 border border-stone-200 text-amber-50 mt-7 py-2 px-4 rounded-md hover:cursor-pointer hover:bg-stone-200/80 hover:text-zinc-900 transition-colors duration-200"
             key={`btn-${key}`}
           >
             {btn}
