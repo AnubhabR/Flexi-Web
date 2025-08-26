@@ -14,12 +14,12 @@ function Card(props) {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-1/5 min-w-[300px] bg-radial-[at_-50%_-50%] from-white/75 from-10% to-zinc-900 to-100% border-white rounded-md p-4">
+    <div className="flex flex-col gap-4 w-1/5 min-w-[300px] text-neutral-800 bg-amber-50 border rounded-md p-4">
       {props.cardtitle &&
         renderItems(props.cardtitle, (title, key) => (
           <div className="flex flex-col" key={`cardtitle-${key}`}>
-            <h2 className="text-xl text-amber-50 font-semibold">{title}</h2>
-            <hr className="border-2 border-amber-50/70 w-3/4" />
+            <h2 className="text-xl text-neutral-800 font-semibold">{title}</h2>
+            <hr className="border-2 border-neutral-800 w-3/4" />
           </div>
         ))}
 
@@ -27,7 +27,7 @@ function Card(props) {
         <div>
           {props.topics &&
             renderItems(props.topics, (topic, key) => (
-              <div className="flex flex-col text-amber-50" key={`topic-${key}`}>
+              <div className="flex flex-col" key={`topic-${key}`}>
                 <p>
                   <b>Topics: </b>
                   {topic}
@@ -36,10 +36,7 @@ function Card(props) {
             ))}
           {props.duedate &&
             renderItems(props.duedate, (date, key) => (
-              <div
-                className="flex flex-col text-amber-50"
-                key={`duedate-${key}`}
-              >
+              <div className="flex flex-col " key={`duedate-${key}`}>
                 <p>
                   <b>Duedate: </b>
                   {date}
@@ -48,10 +45,7 @@ function Card(props) {
             ))}
           {props.maxmarks &&
             renderItems(props.maxmarks, (mark, key) => (
-              <div
-                className="flex flex-col text-amber-50"
-                key={`maxmarks-${key}`}
-              >
+              <div className="flex flex-col " key={`maxmarks-${key}`}>
                 <p>
                   <b>Max Marks: </b>
                   {mark}
@@ -60,10 +54,7 @@ function Card(props) {
             ))}
           {props.questions &&
             renderItems(props.questions, (question, key) => (
-              <div
-                className="flex flex-col text-amber-50"
-                key={`questions-${key}`}
-              >
+              <div className="flex flex-col " key={`questions-${key}`}>
                 <p>
                   <b>Questions: </b>
                   {question}
@@ -79,7 +70,7 @@ function Card(props) {
             renderItems(props.label, (label, key) => (
               <label
                 htmlFor={`input-field-${key}`}
-                className="text-amber-50/75"
+                className=""
                 key={`label-${key}`}
               >
                 {label}
@@ -90,7 +81,7 @@ function Card(props) {
               <input
                 type="text"
                 id={`input-field-${key}`}
-                className="flex bg-gray-700 rounded-md p-2 text-amber-50 justify-center items-center border-0"
+                className="flex bg-gray-700 rounded-md p-2 justify-center items-center border-0"
                 placeholder={input}
                 key={`input-${key}`}
               />
@@ -101,7 +92,7 @@ function Card(props) {
       {props.btntext &&
         renderItems(props.btntext, (btn, key) => (
           <button
-            className="flex justify-center items-center bg-stone-200/50 border border-stone-200 text-amber-50 mt-7 py-2 px-4 rounded-md hover:cursor-pointer hover:bg-stone-200/80 hover:text-zinc-900 transition-colors duration-200"
+            className="flex justify-center items-center bg-amber-50 border-2 mt-7 py-2 px-4 rounded-md hover:cursor-pointer hover:bg-amber-100 hover:font-bold transition ease-in-out duration-200"
             key={`btn-${key}`}
           >
             {btn}

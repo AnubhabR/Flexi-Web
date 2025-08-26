@@ -54,7 +54,7 @@ function App() {
   ];
 
   return (
-    <div className="bg-linear-to-br  from-white to-zinc-900 to-75% flex justify-center items-center min-h-screen">
+    <div className="bg-neutral-800 flex justify-center items-center min-h-screen">
       <Grid items={quizzes} />
       {/* <Table data={users} /> */}
     </div>
