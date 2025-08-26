@@ -1,18 +1,35 @@
+import * as Icon from "lucide-react";
+
 function Sidebar(props) {
   return (
-    <div className="flex flex-col bg-amber-50 p-4 rounded-md shadow-md">
-      <header className="flex w-full justify-center align-middle text-lg font-semibold">
+    <div className="fixed top-0 left-0 flex flex-col max-w-64 justify-between lg:show bg-amber-50 p-2 rounded-tr-md rounded-br-md shadow-md min-h-screen w-64">
+      <header className="flex flex-col py-4 w-full text-center justify-center align-middle text-lg font-semibold">
         Hi {props.user}
+        <div className=" text-4xl text-neutral-800">{props.name}</div>
       </header>
       <main>
         <ul>
-          {props.items.map((item, index) => (
-            <li key={index} className="py-2 px-4 hover:bg-amber-100">
-              {item}
-            </li>
-          ))}
+          {props.items.map((item, index) => {
+            const IconComponent = Icon[props.icons[index]];
+            return (
+              <div
+                className="flex items-center py-2 px-4 gap-1 hover:cursor-pointer hover:bg-amber-100 rounded-md transition-colors duration-200"
+                key={index}
+              >
+                {IconComponent && <IconComponent size={24} className="mr-2" />}
+                <li className="py-2 px-4 list-none">{item}</li>
+              </div>
+            );
+          })}
         </ul>
       </main>
+      <footer>
+        <div className="py-4 px-4 text-sm text-center">
+          &copy; {new Date().getFullYear()} SIT Pune
+        </div>
+      </footer>
     </div>
   );
 }
+
+export default Sidebar;

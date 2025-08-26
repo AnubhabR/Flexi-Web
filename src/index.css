@@ -1,9 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap");
 @import "tailwindcss";
 
-@theme inline {
+:root {
   --default-font-family: "Funnel Display", sans-serif;
-  --color-darkgreen: oklch(0.3886 0.0194 159.78);
-  --color-foreground: oklch(0.7389 0.022 161.27);
-  --color-darkbg: oklch(0.3331 0.0152 223.98);
 }
