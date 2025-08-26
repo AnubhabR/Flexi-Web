@@ -1,9 +1,13 @@
+import React, { useState } from "react";
 import Card from "./components/card";
 import Grid from "./components/grid";
 import Table from "./components/table";
 import Sidebar from "./components/sidebar";
+import QuizMainPage from "./quiz"; // Import your quiz main page
 
 function App() {
+  const [selectedQuiz, setSelectedQuiz] = useState(null);
+
   const users = [
     { name: "John Doe", age: 30, city: "New York" },
     { name: "Jane Smith", age: 25, city: "Los Angeles" },
@@ -114,6 +118,11 @@ function App() {
     },
   ];
 
+  // Handler for starting a quiz
+  const handleStartQuiz = (quiz) => {
+    setSelectedQuiz(quiz);
+  };
+
   return (
     <div className="bg-neutral-800 flex min-h-screen">
       <Sidebar
@@ -138,8 +147,17 @@ function App() {
           "Settings",
         ]}
       />
-      <div className="flex-1 justify-center items-center lg:ml-64">
-        <Grid items={quizzes} />
+      <div className="flex-1 flex justify-center items-center lg:ml-64">
+        {!selectedQuiz ? (
+          <Grid
+            items={quizzes.map((quiz) => ({
+              ...quiz,
+              onButtonClick: () => handleStartQuiz(quiz), // Pass handler to each card
+            }))}
+          />
+        ) : (
+          <QuizMainPage quiz={selectedQuiz} />
+        )}
       </div>
     </div>
   );
