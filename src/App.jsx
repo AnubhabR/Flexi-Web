@@ -138,7 +138,7 @@ function App() {
           "Settings",
         ]}
       />
-      <div className="flex-1 flex justify-center items-center lg:ml-64">
+      <div className="flex-1 justify-center items-center lg:ml-64">
         <Grid items={quizzes} />
       </div>
     </div>

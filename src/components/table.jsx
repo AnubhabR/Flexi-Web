@@ -10,7 +10,7 @@ const Table = ({ data }) => {
   const headers = Object.keys(data[0]);
 
   return (
-    <div className="overflow-x-auto rounded-md border border-2 bg-amber-100 text-neutral-800 shadow-lg">
+    <div className="overflow-x-auto rounded-md border-2 bg-amber-100 text-neutral-800 shadow-lg">
       <table className="min-w-full border-2 rounded-md overflow-hidden">
         <thead className="bg-amber-50 border-b-3 justify-center rounded-md">
           <tr>
