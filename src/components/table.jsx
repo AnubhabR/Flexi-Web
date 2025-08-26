@@ -10,9 +10,9 @@ const Table = ({ data }) => {
   const headers = Object.keys(data[0]);
 
   return (
-    <div className="overflow-x-auto rounded-md border border-gray-700 bg-gray-800 shadow-lg">
-      <table className="min-w-full">
-        <thead className="bg-gray-900 text-amber-50">
+    <div className="overflow-x-auto rounded-md border border-2 bg-amber-100 text-neutral-800 shadow-lg">
+      <table className="min-w-full border-2 rounded-md overflow-hidden">
+        <thead className="bg-amber-50 border-b-3 justify-center rounded-md">
           <tr>
             {headers.map((header, idx) => (
               <th
@@ -24,11 +24,11 @@ const Table = ({ data }) => {
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-700 text-amber-50">
+        <tbody className="divide-y divide-neutral-800">
           {data.map((row, rowIndex) => (
             <tr
               key={rowIndex}
-              className="hover:bg-gray-700 transition-colors duration-200"
+              className={rowIndex % 2 === 0 ? "bg-amber-50" : "bg-amber-100"}
             >
               {headers.map((header, colIndex) => (
                 <td key={colIndex} className="px-4 py-2">

@@ -55,8 +55,8 @@ function App() {
 
   return (
     <div className="bg-neutral-800 flex justify-center items-center min-h-screen">
-      <Grid items={quizzes} />
-      {/* <Table data={users} /> */}
+      {/* <Grid items={quizzes} /> */}
+      <Table data={quizzes} />
     </div>
   );
 }
