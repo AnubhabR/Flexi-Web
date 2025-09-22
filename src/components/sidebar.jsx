@@ -1,3 +1,5 @@
+// sidebar.jsx
+
 import * as Icon from "lucide-react";
 
 function Sidebar(props) {
@@ -11,9 +13,17 @@ function Sidebar(props) {
         <ul>
           {props.items.map((item, index) => {
             const IconComponent = Icon[props.icons[index]];
+            // Check if the current item is the active one
+            const isActive = props.activeItem === item;
+
             return (
               <div
-                className="flex items-center py-2 px-4 gap-1 hover:cursor-pointer hover:bg-amber-100 rounded-md transition-colors duration-200"
+                // 1. ADD THE ONCLICK HANDLER HERE
+                onClick={() => props.onItemSelected(item)}
+                // 2. ADD CONDITIONAL STYLING FOR THE ACTIVE ITEM
+                className={`flex items-center py-2 px-4 gap-1 hover:cursor-pointer hover:bg-amber-100 rounded-md transition-colors duration-200 ${
+                  isActive ? "bg-amber-200 font-bold" : ""
+                }`}
                 key={index}
               >
                 {IconComponent && <IconComponent size={24} className="mr-2" />}

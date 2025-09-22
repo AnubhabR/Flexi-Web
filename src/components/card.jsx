@@ -94,6 +94,7 @@ function Card(props) {
           <button
             className="flex justify-center items-center bg-amber-50 border-2 mt-7 py-2 px-4 rounded-md hover:cursor-pointer hover:bg-amber-100 hover:font-bold transition ease-in-out duration-200"
             key={`btn-${key}`}
+            onClick={props.onButtonClick}
           >
             {btn}
           </button>
