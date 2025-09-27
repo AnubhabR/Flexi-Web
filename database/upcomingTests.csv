@@ -1,0 +1,7 @@
+_id,title,description,scheduledDate,scheduledTime,duration,topics,instructor,maxMarks,questionIds,difficulty,daysLeft,reminderSet,registeredUsers,prerequisites
+1,"Advanced JavaScript Concepts","Deep dive into closures, promises, and async programming","2024-12-20","10:00",45,"Closures, Promises, Async/Await","Prof. Johnson",25,"[11,13]","Advanced",5,false,"[1,2,3,4,5]","JavaScript Fundamentals"
+2,"Database Management Systems","Comprehensive DBMS concepts and SQL","2024-12-22","14:00",60,"SQL, Normalization, Indexing","Dr. Smith",30,"[7,8,15,19]","Intermediate",7,true,"[2,3,5,6,8]","Database Basics"
+3,"Machine Learning Basics","Introduction to supervised learning","2024-12-25","11:30",50,"Supervised Learning, Classification","Dr. Williams",28,"[10,20]","Advanced",10,false,"[1,4,5,7,9]","Statistics, Python"
+4,"React Advanced Patterns","Advanced React concepts and patterns","2024-12-27","09:00",55,"Hooks, Context, Performance","Prof. Miller",32,"[6,18]","Advanced",12,true,"[3,5,6,8,10]","React Basics"
+5,"System Design Interview","Large scale system design principles","2025-01-03","15:30",90,"Scalability, Load Balancing, Caching","Dr. Chen",45,"[5,17]","Expert",19,false,"[2,4,6,7,9]","Data Structures, Databases"
+6,"Cybersecurity Fundamentals","Network security and encryption","2025-01-08","13:00",75,"Encryption, Authentication, HTTPS","Prof. Davis",38,"[14]","Intermediate",24,false,"[1,3,5,8,10]","Networking Basics"

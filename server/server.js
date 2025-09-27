@@ -27,7 +27,13 @@ connectDB();
 
 // Define Routes
 app.use("/api/auth", require("./routes/auth"));
-app.use("/api/user", require("./routes/auth")); // Add this line for /api/user/me
+app.use("/api/user", require("./routes/auth"));
+app.use("/api/quizzes", require("./routes/quizzes"));
+app.use("/api/questions", require("./routes/questions"));
+app.use("/api/ranking", require("./routes/ranking"));
+app.use("/api/past-tests", require("./routes/pastTests"));
+app.use("/api/upcoming-tests", require("./routes/upcomingTests"));
+app.use("/api/quiz-attempts", require("./routes/quizAttempts"));
 
 app.get("/api/test", (req, res) => {
   console.log("✅ /api/test route was hit!");

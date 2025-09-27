@@ -1,0 +1,7 @@
+_id,userId,testId,title,topics,completedDate,score,maxScore,timeSpent,percentage,grade,questionIds,answers,correctAnswers,status
+1,5,101,"JavaScript Fundamentals","Variables, Functions, Objects","2024-12-10T14:30:00Z",18,20,"28:45",90.0,"A","[1,2,11,13,16]","[0,0,0,0,0]","[0,0,0,0,0]","completed"
+2,5,102,"React Basics","Components, Props, State","2024-12-08T16:20:00Z",15,18,"35:20",83.3,"B+","[6,18]","[0,0]","[0,0]","completed"
+3,5,103,"CSS Grid & Flexbox","Layout, Grid, Flexbox","2024-12-05T11:15:00Z",12,15,"22:15",80.0,"B","[3,4,12]","[0,0,0]","[0,0,0]","completed"
+4,5,104,"Python Basics","Variables, Functions, Lists","2024-12-03T13:45:00Z",16,20,"31:10",80.0,"B+","[16]","[0]","[0]","completed"
+5,5,105,"Database Design","SQL, Normalization","2024-11-28T10:30:00Z",14,18,"42:30",77.8,"B","[7,8,15,19]","[0,0,0,0]","[0,0,0,0]","completed"
+6,5,106,"Web Security","Authentication, HTTPS","2024-11-25T15:10:00Z",19,22,"38:45",86.4,"A-","[14]","[0]","[0]","completed"

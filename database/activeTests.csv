@@ -1,0 +1,7 @@
+_id,title,description,topics,timeLimit,maxMarks,questionIds,dueDate,createdBy,createdAt,isActive,difficulty,estimatedDuration
+1,"JavaScript Fundamentals Quiz","Test your knowledge of basic JavaScript concepts","Variables, Functions, Objects","30:00",20,"[1,2,11,13,16]","2024-12-25T23:59:59Z","Prof. Johnson","2024-12-10T08:00:00Z",true,"Easy","25-30 minutes"
+2,"Web Development Basics","HTML, CSS, and basic web concepts","HTML, CSS, Web Development","45:00",25,"[3,4,12,14]","2024-12-30T23:59:59Z","Dr. Smith","2024-12-08T10:00:00Z",true,"Easy","35-45 minutes"
+3,"Database Management","SQL and database design principles","SQL, Database Design, Normalization","60:00",30,"[7,8,15,19]","2024-12-28T23:59:59Z","Prof. Davis","2024-12-05T14:00:00Z",true,"Medium","50-60 minutes"
+4,"Data Structures & Algorithms","Algorithm analysis and complexity","Algorithms, Big O, Sorting","50:00",35,"[5,17]","2025-01-05T23:59:59Z","Dr. Wilson","2024-12-01T09:00:00Z",true,"Advanced","45-50 minutes"
+5,"React Development","Modern React with hooks","React, Hooks, Components","40:00",28,"[6,18]","2024-12-22T23:59:59Z","Prof. Miller","2024-12-12T11:00:00Z",true,"Medium","35-40 minutes"
+6,"Machine Learning Intro","Basic ML concepts and algorithms","Machine Learning, Classification","55:00",32,"[10,20]","2025-01-10T23:59:59Z","Dr. Chen","2024-12-07T13:00:00Z",true,"Advanced","50-55 minutes"
