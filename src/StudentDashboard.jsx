@@ -1,28 +1,14 @@
+// StudentDashboard.jsx
+
 import React, { useState } from "react";
-import Card from "./card";
-import Grid from "./grid";
-import Table from "./table";
-import Sidebar from "./sidebar";
-import QuizMainPage from "./quiz.jsx"; // Import your quiz main page
-import { useNavigate } from 'react-router-dom';
+import Sidebar from "./components/sidebar";
+import Grid from "./components/grid";
+import QuizMainPage from "./quiz";
 
-function Dashboard() {
-  const [selectedQuiz, setSelectedQuiz] = useState(null);
+const StudentDashboard = () => {
+    const [selectedQuiz, setSelectedQuiz] = useState(null);
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
-
-  const users = [
-    { name: "John Doe", age: 30, city: "New York" },
-    { name: "Jane Smith", age: 25, city: "Los Angeles" },
-    { name: "Peter Jones", age: 45, city: "Chicago" },
-    { name: "Mary Williams", age: 22, city: "Houston" },
-  ];
-
+    // This data was moved from App.jsx
   const quizzes = [
     {
       cardtitle: "Quiz on React JS",
@@ -126,54 +112,33 @@ function Dashboard() {
     },
   ];
 
-  // Handler for starting a quiz
-  const handleStartQuiz = (quiz) => {
-    setSelectedQuiz(quiz);
-  };
+    const handleStartQuiz = (quiz) => {
+        setSelectedQuiz(quiz);
+    };
+    const [activeView, setActiveView] = useState("Active Quizzes");
 
-  return (
-    <div className="bg-neutral-800 flex min-h-screen">
-      <Sidebar
-        user="Student"
-        name="Utso"
-        icons={[
-          "House",
-          "Tally5",
-          "Medal",
-          "ArrowBigLeftDash",
-          "Goal",
-          "ArrowBigRightDash",
-          "Cog",
-        ]}
-        items={[
-          "Home",
-          "Overall Score",
-          "Ranking",
-          "Past Tests",
-          "Active Tests",
-          "Upcoming Tests",
-          "Settings",
-        ]}
+    return (
+        <div className="flex w-full">
+            <Sidebar
+                user="Student"
+                name="Utso"
+                icons={["House", "Tally5", "Medal", "ArrowBigLeftDash", "Goal", "ArrowBigRightDash", "Cog"]}
+                items={["Home", "Overall Score", "Ranking", "Past Tests", "Active Tests", "Upcoming Tests", "Settings"]}
+            />
+            <main className="flex-1 flex justify-center items-center lg:ml-64 p-8">
+                {!selectedQuiz ? (
+                    <Grid
+                        items={quizzes.map((quiz) => ({
+                            ...quiz,
+                            onButtonClick: () => handleStartQuiz(quiz),
+                        }))}
+                    />
+                ) : (
+                    <QuizMainPage quiz={selectedQuiz} />
+                )}
+            </main>
+        </div>
+    );
+};
 
-        
-      />
-      
-      <div className="flex-1 flex justify-center items-center lg:ml-64">
-        {!selectedQuiz ? (
-          <Grid
-            items={quizzes.map((quiz) => ({
-              ...quiz,
-              onButtonClick: () => handleStartQuiz(quiz), // Pass handler to each card
-            }))}
-          />
-        ) : (
-          <QuizMainPage quiz={selectedQuiz} />
-        )}
-      </div>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-    
-  );
-}
-
-export default Dashboard;
+export default StudentDashboard;
