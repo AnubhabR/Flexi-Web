@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import Card from "./card";
 import Grid from "./grid";
-import Table from "./table";
 import Sidebar from "./sidebar";
 import QuizMainPage from "./quiz.jsx"; // Import your quiz main page
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
@@ -12,8 +10,8 @@ function Dashboard() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   const users = [
@@ -154,10 +152,8 @@ function Dashboard() {
           "Upcoming Tests",
           "Settings",
         ]}
-
-        
       />
-      
+
       <div className="flex-1 flex justify-center items-center lg:ml-64">
         {!selectedQuiz ? (
           <Grid
@@ -172,7 +168,6 @@ function Dashboard() {
       </div>
       <button onClick={handleLogout}>Logout</button>
     </div>
-    
   );
 }
 

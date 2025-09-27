@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import TeacherDashboard from "../TeacherDashboard";
+import StudentDashboard from "../StudentDashboard";
 
-const PrivateRoute = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+const RoleBasedRoute = () => {
+  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const fetchUserRole = async () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
-        setIsAuthenticated(false);
         setLoading(false);
         return;
       }
@@ -23,21 +24,20 @@ const PrivateRoute = () => {
         });
 
         if (response.ok) {
-          setIsAuthenticated(true);
+          const userData = await response.json();
+          setUserRole(userData.role);
         } else {
           localStorage.removeItem("token");
-          setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error("Error checking authentication:", error);
+        console.error("Error fetching user role:", error);
         localStorage.removeItem("token");
-        setIsAuthenticated(false);
       } finally {
         setLoading(false);
       }
     };
 
-    checkAuth();
+    fetchUserRole();
   }, []);
 
   if (loading) {
@@ -48,7 +48,11 @@ const PrivateRoute = () => {
     );
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+  if (!localStorage.getItem("token")) {
+    return <Navigate to="/login" />;
+  }
+
+  return userRole === "teacher" ? <TeacherDashboard /> : <StudentDashboard />;
 };
 
-export default PrivateRoute;
+export default RoleBasedRoute;

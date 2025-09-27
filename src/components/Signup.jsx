@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "student",
+  });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -62,9 +67,19 @@ export default function Signup() {
           placeholder="Password"
           value={form.password}
           onChange={handleChange}
-          className="w-full mb-6 p-2 border rounded"
+          className="w-full mb-4 p-2 border rounded"
           required
         />
+        <select
+          name="role"
+          value={form.role}
+          onChange={handleChange}
+          className="w-full mb-6 p-2 border rounded bg-white"
+          required
+        >
+          <option value="student">Student</option>
+          <option value="teacher">Faculty</option>
+        </select>
         <button
           type="submit"
           className="w-full bg-amber-500 text-white py-2 rounded hover:bg-amber-600 transition"

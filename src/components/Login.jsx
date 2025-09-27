@@ -1,36 +1,42 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const { email, password } = formData;
-  const navigate = useNavigate(); // 2. Initialize the navigate function
+  const navigate = useNavigate();
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     try {
-      const res = await axios.post('http://localhost:5001/api/auth/login', formData);
-      localStorage.setItem('token', res.data.token);
-      alert('Login successful!');
-      navigate('/dashboard'); // 3. Redirect to the dashboard
+      const res = await axios.post(
+        "http://localhost:5001/api/auth/login",
+        formData
+      );
+      localStorage.setItem("token", res.data.token);
+
+      // Navigate to dashboard which will trigger role-based routing
+      navigate("/dashboard");
     } catch (err) {
-      console.error(err.response.data);
-      alert('Error logging in.');
+      console.error(err.response?.data);
+      setError(err.response?.data?.msg || "Error logging in.");
     }
   };
 
   return (
-    
     <div className="flex flex-col items-center justify-center min-h-screen bg-amber-100">
       <form
         onSubmit={onSubmit}
         className="bg-white p-8 rounded shadow w-full max-w-md"
       >
         <h2 className="text-2xl font-bold mb-6 text-neutral-800">Login</h2>
+        {error && <div className="mb-4 text-red-600">{error}</div>}
         <input
           type="email"
           placeholder="Email"
