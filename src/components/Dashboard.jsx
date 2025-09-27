@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import Card from "./components/card";
-import Grid from "./components/grid";
-import Table from "./components/table";
-import Sidebar from "./components/sidebar";
-import QuizMainPage from "./quiz"; // Import your quiz main page
+import Card from "./card";
+import Grid from "./grid";
+import Table from "./table";
+import Sidebar from "./sidebar";
+import QuizMainPage from "/Users/anshumangahlot/FullStackCollege/Flexi-Web-Stratch/src/quiz.jsx"; // Import your quiz main page
+import { useNavigate } from 'react-router-dom';
 
-function App() {
+function Dashboard() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
   const users = [
     { name: "John Doe", age: 30, city: "New York" },
@@ -146,7 +154,10 @@ function App() {
           "Upcoming Tests",
           "Settings",
         ]}
+
+        
       />
+      
       <div className="flex-1 flex justify-center items-center lg:ml-64">
         {!selectedQuiz ? (
           <Grid
@@ -159,8 +170,10 @@ function App() {
           <QuizMainPage quiz={selectedQuiz} />
         )}
       </div>
+      <button onClick={handleLogout}>Logout</button>
     </div>
+    
   );
 }
 
-export default App;
+export default Dashboard;
