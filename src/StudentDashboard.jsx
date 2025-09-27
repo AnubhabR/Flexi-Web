@@ -115,6 +115,7 @@ const StudentDashboard = () => {
     const handleStartQuiz = (quiz) => {
         setSelectedQuiz(quiz);
     };
+    const [activeView, setActiveView] = useState("Active Quizzes");
 
     return (
         <div className="flex w-full">

@@ -3,7 +3,7 @@ import Card from "./card";
 import Grid from "./grid";
 import Table from "./table";
 import Sidebar from "./sidebar";
-import QuizMainPage from "/Users/anshumangahlot/FullStackCollege/Flexi-Web-Stratch/src/quiz.jsx"; // Import your quiz main page
+import QuizMainPage from "./quiz.jsx"; // Import your quiz main page
 import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
