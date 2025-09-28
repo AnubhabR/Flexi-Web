@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { email, password } = formData;
   const navigate = useNavigate();
 
@@ -14,18 +15,34 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
+
     try {
       const res = await axios.post(
         "http://localhost:5001/api/auth/login",
         formData
       );
+
+      // Store the token
       localStorage.setItem("token", res.data.token);
 
-      // Navigate to dashboard which will trigger role-based routing
+      // Store user role if provided
+      if (res.data.user?.role) {
+        localStorage.setItem("userRole", res.data.user.role);
+      }
+
+      // Store user data if provided
+      if (res.data.user) {
+        localStorage.setItem("userData", JSON.stringify(res.data.user));
+      }
+
+      // Navigate to dashboard
       navigate("/dashboard");
     } catch (err) {
       console.error(err.response?.data);
       setError(err.response?.data?.msg || "Error logging in.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -36,7 +53,9 @@ const Login = () => {
         className="bg-white p-8 rounded shadow w-full max-w-md"
       >
         <h2 className="text-2xl font-bold mb-6 text-neutral-800">Login</h2>
-        {error && <div className="mb-4 text-red-600">{error}</div>}
+        {error && (
+          <div className="mb-4 text-red-600 p-2 bg-red-50 rounded">{error}</div>
+        )}
         <input
           type="email"
           placeholder="Email"
@@ -44,7 +63,8 @@ const Login = () => {
           value={email}
           onChange={onChange}
           required
-          className="w-full mb-4 p-2 border rounded"
+          className="w-full mb-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+          disabled={isLoading}
         />
         <input
           type="password"
@@ -53,17 +73,22 @@ const Login = () => {
           value={password}
           onChange={onChange}
           required
-          className="w-full mb-6 p-2 border rounded"
+          className="w-full mb-6 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+          disabled={isLoading}
         />
         <button
           type="submit"
-          className="w-full bg-amber-500 text-white py-2 rounded hover:bg-amber-600 transition"
+          disabled={isLoading}
+          className="w-full bg-amber-500 text-white py-2 rounded hover:bg-amber-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Login
+          {isLoading ? "Logging in..." : "Login"}
         </button>
         <div className="mt-4 text-center">
           Don't have an account?{" "}
-          <a href="/signup" className="text-amber-600 underline">
+          <a
+            href="/signup"
+            className="text-amber-600 underline hover:text-amber-700"
+          >
             Sign Up
           </a>
         </div>

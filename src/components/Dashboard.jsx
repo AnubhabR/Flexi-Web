@@ -1,132 +1,130 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "./grid";
 import Sidebar from "./sidebar";
-import QuizMainPage from "./quiz.jsx"; // Import your quiz main page
+import QuizMainPage from "./quiz.jsx";
 import { useNavigate } from "react-router-dom";
+import ActiveTests from "./ActiveTests";
+import PastTests from "./PastTests";
+import UpcomingTests from "./UpcomingTests";
+import Ranking from "./Ranking";
+import { logout } from "../utils/auth";
 
 function Dashboard() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const [activeTab, setActiveTab] = useState("active");
+  const [quizzes, setQuizzes] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+    logout(navigate);
   };
 
-  const users = [
-    { name: "John Doe", age: 30, city: "New York" },
-    { name: "Jane Smith", age: 25, city: "Los Angeles" },
-    { name: "Peter Jones", age: 45, city: "Chicago" },
-    { name: "Mary Williams", age: 22, city: "Houston" },
-  ];
+  // Fetch quizzes when active tab is selected
+  useEffect(() => {
+    if (activeTab === "active") {
+      fetchQuizzes();
+    }
+  }, [activeTab]);
 
-  const quizzes = [
-    {
-      cardtitle: "Quiz on React JS",
-      btntext: "Start",
-      quiz: true,
-      questions: 20,
-      timelimit: "40:00",
-      topics: "React Basics, Hooks",
-      duedate: "10/12/2025",
-      maxmarks: 20,
-    },
-    {
-      cardtitle: "Quiz on JavaScript",
-      btntext: "Begin",
-      quiz: true,
-      questions: 15,
-      timelimit: "30:00",
-      topics: "ES6, Closures",
-      duedate: "11/12/2025",
-      maxmarks: 15,
-    },
-    {
-      cardtitle: "Quiz on React JS",
-      btntext: "Start",
-      quiz: true,
-      questions: 20,
-      timelimit: "40:00",
-      topics: "React Basics, Hooks",
-      duedate: "10/12/2025",
-      maxmarks: 20,
-    },
-    {
-      cardtitle: "Quiz on JavaScript",
-      btntext: "Begin",
-      quiz: true,
-      questions: 15,
-      timelimit: "30:00",
-      topics: "ES6, Closures",
-      duedate: "11/12/2025",
-      maxmarks: 15,
-    },
-    {
-      cardtitle: "Quiz on React JS",
-      btntext: "Start",
-      quiz: true,
-      questions: 20,
-      timelimit: "40:00",
-      topics: "React Basics, Hooks",
-      duedate: "10/12/2025",
-      maxmarks: 20,
-    },
-    {
-      cardtitle: "Quiz on JavaScript",
-      btntext: "Begin",
-      quiz: true,
-      questions: 15,
-      timelimit: "30:00",
-      topics: "ES6, Closures",
-      duedate: "11/12/2025",
-      maxmarks: 15,
-    },
-    {
-      cardtitle: "Quiz on JavaScript",
-      btntext: "Begin",
-      quiz: true,
-      questions: 15,
-      timelimit: "30:00",
-      topics: "ES6, Closures",
-      duedate: "11/12/2025",
-      maxmarks: 15,
-    },
-    {
-      cardtitle: "Quiz on JavaScript",
-      btntext: "Begin",
-      quiz: true,
-      questions: 15,
-      timelimit: "30:00",
-      topics: "ES6, Closures",
-      duedate: "11/12/2025",
-      maxmarks: 15,
-    },
-    {
-      cardtitle: "Quiz on CSS",
-      btntext: "Go",
-      quiz: true,
-      questions: 10,
-      timelimit: "20:00",
-      topics: "Flexbox, Grid",
-      duedate: "12/12/2025",
-      maxmarks: 10,
-    },
-    {
-      cardtitle: "Quiz on JavaScript",
-      btntext: "Begin",
-      quiz: true,
-      questions: 15,
-      timelimit: "30:00",
-      topics: "ES6, Closures",
-      duedate: "11/12/2025",
-      maxmarks: 15,
-    },
-  ];
+  const fetchQuizzes = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("http://localhost:5001/api/quizzes", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setQuizzes(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching quizzes:", err);
+      setError("Failed to load quizzes");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Handler for starting a quiz
   const handleStartQuiz = (quiz) => {
     setSelectedQuiz(quiz);
+  };
+
+  // Handle sidebar navigation
+  const handleSidebarClick = (item) => {
+    if (item === "Logout") {
+      // Show confirmation dialog before logout
+      if (window.confirm("Are you sure you want to logout?")) {
+        handleLogout();
+      }
+      return;
+    }
+
+    // Map items to tab names
+    const tabMap = {
+      Home: "active",
+      "Overall Score": "score",
+      Ranking: "ranking",
+      "Past Tests": "past",
+      "Active Tests": "active",
+      "Upcoming Tests": "upcoming",
+    };
+
+    const selectedTab = tabMap[item] || "active";
+    setActiveTab(selectedTab);
+    setSelectedQuiz(null); // Reset quiz selection when changing tabs
+  };
+
+  const renderContent = () => {
+    if (selectedQuiz) {
+      return <QuizMainPage quiz={selectedQuiz} />;
+    }
+
+    switch (activeTab) {
+      case "active":
+      case "home":
+        return (
+          <ActiveTests
+            quizzes={quizzes}
+            loading={loading}
+            error={error}
+            onStartQuiz={handleStartQuiz}
+          />
+        );
+      case "past":
+        return <PastTests />;
+      case "upcoming":
+        return <UpcomingTests />;
+      case "ranking":
+        return <Ranking />;
+      case "score":
+        return (
+          <div className="text-center p-8 pb-20 lg:pb-6">
+            <h2 className="text-2xl font-bold mb-4">Overall Score</h2>
+            <p>Your performance dashboard coming soon...</p>
+          </div>
+        );
+      default:
+        return (
+          <ActiveTests
+            quizzes={quizzes}
+            loading={loading}
+            error={error}
+            onStartQuiz={handleStartQuiz}
+          />
+        );
+    }
   };
 
   return (
@@ -141,7 +139,7 @@ function Dashboard() {
           "ArrowBigLeftDash",
           "Goal",
           "ArrowBigRightDash",
-          "Cog",
+          "LogOut", // Replaced Settings icon with LogOut
         ]}
         items={[
           "Home",
@@ -150,23 +148,24 @@ function Dashboard() {
           "Past Tests",
           "Active Tests",
           "Upcoming Tests",
-          "Settings",
+          "Logout", // Replaced Settings with Logout
         ]}
+        activeItem={(() => {
+          const itemMap = {
+            active: "Home",
+            score: "Overall Score",
+            ranking: "Ranking",
+            past: "Past Tests",
+            upcoming: "Upcoming Tests",
+          };
+          return itemMap[activeTab] || "Home";
+        })()}
+        onItemSelected={handleSidebarClick}
       />
 
       <div className="flex-1 flex justify-center items-center lg:ml-64">
-        {!selectedQuiz ? (
-          <Grid
-            items={quizzes.map((quiz) => ({
-              ...quiz,
-              onButtonClick: () => handleStartQuiz(quiz), // Pass handler to each card
-            }))}
-          />
-        ) : (
-          <QuizMainPage quiz={selectedQuiz} />
-        )}
+        <div className="w-full p-6">{renderContent()}</div>
       </div>
-      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 }

@@ -135,7 +135,7 @@ const UpcomingTests = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-96">
+      <div className="flex flex-col items-center justify-center min-h-96 pb-20 lg:pb-6">
         <div className="animate-spin rounded-full h-16 w-16 border-4 border-purple-500 border-t-transparent"></div>
         <p className="mt-4 text-lg text-gray-600">Loading upcoming tests...</p>
       </div>
@@ -143,7 +143,7 @@ const UpcomingTests = () => {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto">
+    <div className="w-full max-w-7xl mx-auto pb-20 lg:pb-6">
       {error && (
         <div className="mb-4 p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
           {error} - Showing sample data

@@ -1,6 +1,7 @@
 // StudentDashboard.jsx
 
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "./components/sidebar";
 import QuizMainPage from "./components/quiz";
 import Ranking from "./components/Ranking";
@@ -14,6 +15,22 @@ const StudentDashboard = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  // Logout function
+  const handleLogout = () => {
+    // Clear all authentication data
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userData");
+
+    // Clear any other stored data if needed
+    localStorage.clear();
+
+    // Navigate to login page
+    navigate("/login");
+  };
 
   // Test database connectivity
   const testDatabase = async () => {
@@ -61,23 +78,59 @@ const StudentDashboard = () => {
     fetchQuizzes();
   }, []);
 
-  const handleStartQuiz = async (quizId) => {
-    const token = localStorage.getItem("token");
-    const response = await fetch(
-      `http://localhost:5001/api/quizzes/${quizId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+  // Fix: Handle quiz selection - accept quiz object directly
+  const handleStartQuiz = async (quiz) => {
+    try {
+      console.log("Starting quiz:", quiz);
+
+      // If the quiz already has questions, use it directly
+      if (quiz.questions && quiz.questions.length > 0) {
+        setSelectedQuiz(quiz);
+        return;
       }
-    );
-    const quizData = await response.json();
-    setSelectedQuiz(quizData); // Pass to QuizMainPage
+
+      // Otherwise, fetch the full quiz with questions
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `http://localhost:5001/api/quizzes/${quiz._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch quiz: ${response.status}`);
+      }
+
+      const quizData = await response.json();
+      setSelectedQuiz(quizData);
+    } catch (err) {
+      console.error("Error starting quiz:", err);
+      // Fallback: use the quiz object as-is if fetch fails
+      setSelectedQuiz(quiz);
+    }
   };
 
   const handleBackFromQuiz = () => {
     setSelectedQuiz(null);
+  };
+
+  // Handle sidebar navigation including logout
+  const handleSidebarClick = (item) => {
+    if (item === "Logout") {
+      // Show confirmation dialog before logout
+      if (window.confirm("Are you sure you want to logout?")) {
+        handleLogout();
+      }
+      return;
+    }
+
+    // Set the active view for other items
+    setActiveView(item);
+    setSelectedQuiz(null); // Reset quiz selection when changing views
   };
 
   const renderContent = () => {
@@ -88,7 +141,7 @@ const StudentDashboard = () => {
     switch (activeView) {
       case "Home":
         return (
-          <div className="w-full max-w-4xl mx-auto text-center">
+          <div className="w-full max-w-4xl mx-auto text-center pb-20 lg:pb-6">
             <div className="text-6xl mb-4 animate-bounce">👋</div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               Welcome to Your Dashboard!
@@ -101,7 +154,7 @@ const StudentDashboard = () => {
         );
       case "Overall Score":
         return (
-          <div className="w-full max-w-4xl mx-auto text-center">
+          <div className="w-full max-w-4xl mx-auto text-center pb-20 lg:pb-6">
             <div className="text-6xl mb-4 animate-pulse">📊</div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">
               Your Overall Score
@@ -126,14 +179,6 @@ const StudentDashboard = () => {
         );
       case "Upcoming Tests":
         return <UpcomingTests />;
-      case "Settings":
-        return (
-          <div className="w-full max-w-4xl mx-auto text-center">
-            <div className="text-6xl mb-4 animate-spin">⚙️</div>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Settings</h2>
-            <p className="text-gray-600">Customize your learning experience.</p>
-          </div>
-        );
       default:
         return (
           <ActiveTests
@@ -152,7 +197,7 @@ const StudentDashboard = () => {
         user="Student"
         name="Utso"
         activeItem={activeView}
-        onItemSelected={setActiveView}
+        onItemSelected={handleSidebarClick}
         icons={[
           "House",
           "Tally5",
@@ -160,7 +205,7 @@ const StudentDashboard = () => {
           "ArrowBigLeftDash",
           "Goal",
           "ArrowBigRightDash",
-          "Cog",
+          "LogOut", // Changed from "Cog" to "LogOut"
         ]}
         items={[
           "Home",
@@ -169,10 +214,10 @@ const StudentDashboard = () => {
           "Past Tests",
           "Active Tests",
           "Upcoming Tests",
-          "Settings",
+          "Logout", // Changed from "Settings" to "Logout"
         ]}
       />
-      <main className="flex-1 flex justify-center items-start lg:ml-64 p-8 overflow-auto">
+      <main className="flex-1 flex justify-center items-start lg:ml-64 p-8 pb-20 lg:pb-6 overflow-auto">
         {renderContent()}
       </main>
     </div>

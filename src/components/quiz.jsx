@@ -24,6 +24,58 @@ export default function QuizMainPage({ quiz, onBack }) {
   const [timeRemaining, setTimeRemaining] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
 
+  // Debug: Log quiz data
+  useEffect(() => {
+    console.log("Quiz data received:", quiz);
+    console.log("Quiz questions:", quiz?.questions);
+  }, [quiz]);
+
+  // Ensure we have valid quiz data
+  if (!quiz) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-6">
+        <div className="text-center">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            No Quiz Data
+          </h2>
+          <p className="text-gray-600 mb-4">Unable to load quiz information.</p>
+          <button
+            onClick={onBack}
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+          >
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Ensure questions array exists
+  const questions = quiz.questions || [];
+
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-6">
+        <div className="text-center">
+          <div className="text-6xl mb-4">📝</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            No Questions Available
+          </h2>
+          <p className="text-gray-600 mb-4">
+            This quiz doesn't have any questions yet.
+          </p>
+          <button
+            onClick={onBack}
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+          >
+            Back to Dashboard
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   // Timer functionality
   useEffect(() => {
     if (quizStarted && !quizCompleted && quiz.timeLimit) {
@@ -48,7 +100,7 @@ export default function QuizMainPage({ quiz, onBack }) {
 
   const handleTimeUp = () => {
     let correctAnswers = 0;
-    quiz.questions.forEach((question, index) => {
+    questions.forEach((question, index) => {
       if (answers[index] === question.correctAnswer) {
         correctAnswers++;
       }
@@ -66,6 +118,7 @@ export default function QuizMainPage({ quiz, onBack }) {
   };
 
   const handleStartQuiz = () => {
+    console.log("Starting quiz with questions:", questions);
     setQuizStarted(true);
   };
 
@@ -78,12 +131,12 @@ export default function QuizMainPage({ quiz, onBack }) {
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestion < quiz.questions.length - 1) {
+    if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedOption(answers[currentQuestion + 1] ?? null);
     } else {
       let correctAnswers = 0;
-      quiz.questions.forEach((question, index) => {
+      questions.forEach((question, index) => {
         if (answers[index] === question.correctAnswer) {
           correctAnswers++;
         }
@@ -182,7 +235,7 @@ export default function QuizMainPage({ quiz, onBack }) {
 
   // Quiz completion view
   if (quizCompleted) {
-    const percentage = Math.round((score / quiz.questions.length) * 100);
+    const percentage = Math.round((score / questions.length) * 100);
     const grade = getScoreGrade(percentage);
 
     return (
@@ -208,7 +261,7 @@ export default function QuizMainPage({ quiz, onBack }) {
                 </div>
                 <div className="text-blue-800 text-sm">Correct Answers</div>
                 <div className="text-blue-600 text-xs">
-                  out of {quiz.questions.length}
+                  out of {questions.length}
                 </div>
               </div>
 
@@ -292,7 +345,7 @@ export default function QuizMainPage({ quiz, onBack }) {
                 <div className="text-center p-4 bg-blue-50 rounded-xl">
                   <BookOpen className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                   <div className="text-2xl font-bold text-blue-800">
-                    {quiz.questions?.length || 0}
+                    {questions.length}
                   </div>
                   <div className="text-blue-600 text-sm">Questions</div>
                 </div>
@@ -344,7 +397,7 @@ export default function QuizMainPage({ quiz, onBack }) {
 
               <div className="text-center">
                 <button
-                  onClick={() => handleStartQuiz(quiz._id)}
+                  onClick={handleStartQuiz}
                   className="inline-flex items-center space-x-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-10 py-4 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 font-medium text-lg shadow-lg"
                 >
                   <Play className="w-6 h-6" />
@@ -359,10 +412,10 @@ export default function QuizMainPage({ quiz, onBack }) {
   }
 
   // Quiz in progress view
-  const currentQ = quiz.questions[currentQuestion];
-  const isLastQuestion = currentQuestion === quiz.questions.length - 1;
+  const currentQ = questions[currentQuestion];
+  const isLastQuestion = currentQuestion === questions.length - 1;
   const hasAnswered = answers.hasOwnProperty(currentQuestion);
-  const progress = ((currentQuestion + 1) / quiz.questions.length) * 100;
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6">
@@ -379,7 +432,7 @@ export default function QuizMainPage({ quiz, onBack }) {
 
           <div className="text-center">
             <div className="text-sm text-gray-500">
-              Question {currentQuestion + 1} of {quiz.questions.length}
+              Question {currentQuestion + 1} of {questions.length}
             </div>
             {timeRemaining !== null && (
               <div
@@ -477,8 +530,7 @@ export default function QuizMainPage({ quiz, onBack }) {
               </button>
 
               <div className="text-sm text-gray-500">
-                {Object.keys(answers).length} of {quiz.questions.length}{" "}
-                answered
+                {Object.keys(answers).length} of {questions.length} answered
               </div>
 
               <button
