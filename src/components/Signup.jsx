@@ -79,6 +79,7 @@ export default function Signup() {
         >
           <option value="student">Student</option>
           <option value="teacher">Faculty</option>
+          <option value="admin">Admin</option>
         </select>
         <button
           type="submit"

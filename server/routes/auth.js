@@ -98,6 +98,12 @@ router.post("/signup", async (req, res) => {
     const existing = await User.findOne({ email });
     if (existing)
       return res.status(400).json({ message: "Email already exists" });
+
+    const allowedRoles = ["student", "teacher", "admin"];
+    if (!allowedRoles.includes(role)) {
+      return res.status(400).json({ message: "Invalid role" });
+    }
+
     const hashed = await bcrypt.hash(password, 10);
     const user = new User({ name, email, password: hashed, role });
     await user.save();
