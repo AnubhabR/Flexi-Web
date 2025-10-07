@@ -58,13 +58,15 @@ const RoleBasedRoute = () => {
     return <Navigate to="/login" />;
   }
 
-  if (userRole === "admin") {
-    return <AdminDashboard />;
-  } else if (userRole === "teacher") {
-    return <TeacherDashboard />;
-  } else {
-    return <StudentDashboard />;
-  }
+  if (userRole === "student") {
+  return <StudentDashboard />;
+} else if (userRole === "teacher") {
+  return <TeacherDashboard />;
+} else if (userRole === "admin") {
+  return <AdminDashboard />;
+} else {
+  return <Navigate to="/login" />;
+}
 };
 
 export default RoleBasedRoute;
