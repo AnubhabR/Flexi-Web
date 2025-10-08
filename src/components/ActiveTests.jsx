@@ -162,6 +162,28 @@ const ActiveTests = ({ quizzes, loading, error, onStartQuiz }) => {
     );
   }
 
+  const tests = quizzes;
+
+  const activeTests = (tests || []).filter((test) => {
+    const matchesSearch =
+      test.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      test.topics.toLowerCase().includes(searchTerm.toLowerCase());
+
+    if (selectedFilter === "all") return matchesSearch;
+    if (selectedFilter === "easy")
+      return matchesSearch && (test.questions?.length || 0) <= 10;
+    if (selectedFilter === "medium")
+      return (
+        matchesSearch &&
+        (test.questions?.length || 0) > 10 &&
+        (test.questions?.length || 0) <= 20
+      );
+    if (selectedFilter === "hard")
+      return matchesSearch && (test.questions?.length || 0) > 20;
+
+    return matchesSearch;
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Add bottom padding on mobile to prevent content being hidden behind navbar */}
