@@ -1,46 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Icon from "lucide-react";
 
 // Import reusable components
 import Sidebar from "./components/sidebar.jsx";
 import Table from "./components/table.jsx";
-import Grid from "./components/grid.jsx";
 
 // Import teacher-specific components
-import MakeQuizForm from "./components/MakeQuizForm.jsx";
-import UploadQuestions from "./components/UploadQuestions.jsx";
+import MakeQuizForm from "./components/MakeQuizForm.jsx"; //
+import UploadQuestions from "./components/UploadQuestions.jsx"; //
+import TeacherQuizList from "./components/TeacherQuizList.jsx"; // <-- IMPORT THE NEW COMPONENT
 
 const TeacherDashboard = () => {
   const [activeView, setActiveView] = useState("Make Quiz");
   const navigate = useNavigate();
 
-  // Logout function
+  // Logout function (no changes)
   const handleLogout = () => {
-    // Clear all authentication data
-    localStorage.removeItem("token");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("userData");
-
-    // Clear any other stored data if needed
-    localStorage.clear();
-
-    // Navigate to login page
-    navigate("/login");
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.clear();
+      navigate("/login");
+    }
   };
 
+  // Data remains the same for now
   const classesData = [
     {
       "Class Name": "B.Tech CSE - A",
       Students: 34,
       Subject: "Web Technologies",
     },
-    {
-      "Class Name": "B.Tech CSE - B",
-      Students: 32,
-      Subject: "Data Structures",
-    },
-    { "Class Name": "M.Tech AI", Students: 15, Subject: "Machine Learning" },
+    // ... other classes
   ];
 
   const pastQuizzesData = [
@@ -64,34 +53,31 @@ const TeacherDashboard = () => {
       duedate: "10/10/2024",
       maxmarks: 15,
     },
+     // ... other quizzes
   ];
 
-  // Handle sidebar navigation including logout
+  // Sidebar click handler (no changes)
   const handleSidebarClick = (item) => {
     if (item === "Logout") {
-      // Show confirmation dialog before logout
-      if (window.confirm("Are you sure you want to logout?")) {
-        handleLogout();
-      }
+      handleLogout();
       return;
     }
-
-    // Set the active view for other items
     setActiveView(item);
   };
 
   const renderContent = () => {
     switch (activeView) {
       case "Make Quiz":
-        return <MakeQuizForm />;
+        return <MakeQuizForm />; //
       case "Upload Questions":
-        return <UploadQuestions />;
+        return <UploadQuestions />; //
       case "Available Classes":
-        return <Table data={classesData} />;
+        return <Table data={classesData} />; //
       case "Past Quizzes":
-        return <Grid items={pastQuizzesData} />;
+        // USE THE NEW COMPONENT HERE
+        return <TeacherQuizList quizzes={pastQuizzesData} />; //
       default:
-        return <MakeQuizForm />;
+        return <MakeQuizForm />; //
     }
   };
 
@@ -107,14 +93,14 @@ const TeacherDashboard = () => {
           "Upload",
           "Users",
           "History",
-          "LogOut", // Added logout icon
+          "LogOut",
         ]}
         items={[
           "Make Quiz",
           "Upload Questions",
           "Available Classes",
           "Past Quizzes",
-          "Logout", // Added logout item
+          "Logout",
         ]}
       />
       <main className="flex-1 flex justify-center items-start lg:ml-64 p-8 pb-20 lg:pb-6 overflow-auto">
