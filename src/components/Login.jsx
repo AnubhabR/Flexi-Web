@@ -47,52 +47,106 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-amber-100">
-      <form
-        onSubmit={onSubmit}
-        className="bg-white p-8 rounded shadow w-full max-w-md"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-neutral-800">Login</h2>
-        {error && (
-          <div className="mb-4 text-red-600 p-2 bg-red-50 rounded">{error}</div>
-        )}
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={email}
-          onChange={onChange}
-          required
-          className="w-full mb-4 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
-          disabled={isLoading}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          value={password}
-          onChange={onChange}
-          required
-          className="w-full mb-6 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
-          disabled={isLoading}
-        />
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-amber-500 text-white py-2 rounded hover:bg-amber-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
-        <div className="mt-4 text-center">
-          Don't have an account?{" "}
-          <a
-            href="/signup"
-            className="text-amber-600 underline hover:text-amber-700"
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-800">
+            Welcome back
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Please sign in to your account
+          </p>
+          </div>
+          <form onSubmit={onSubmit} className="mt-8 space-y-6">
+          {error && (
+            <div className="rounded-xl bg-white p-4 shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)]">
+              <div className="flex">
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">{error}</h3>
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="space-y-6">
+            <div className="rounded-xl bg-gray-100 p-2 shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)]">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={onChange}
+                disabled={isLoading}
+                className="w-full rounded-lg bg-gray-200 border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-gray-500"
+                placeholder="Email address"
+              />
+            </div>
+            <div className="rounded-xl bg-gray-100 p-2 shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)]">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={onChange}
+                disabled={isLoading}
+                className="w-full rounded-lg bg-gray-200 border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-gray-500"
+                placeholder="Password"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="group relative flex w-full justify-center rounded-xl bg-gray-600 px-4 py-3 text-sm font-medium text-white 
+            shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)] 
+            hover:bg-gray-700 hover:shadow-[-2px_-2px_5px_rgba(255,255,255,0.8),2px_2px_5px_rgba(0,0,0,0.1)] 
+            active:shadow-[inset_-2px_-2px_5px_rgba(255,255,255,0.8),inset_2px_2px_5px_rgba(0,0,0,0.1)] 
+            disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           >
-            Sign Up
-          </a>
-        </div>
-      </form>
+            {isLoading ? (
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg
+                  className="h-5 w-5 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              </span>
+            ) : null}
+            {isLoading ? "Signing in..." : "Sign in"}
+          </button>
+
+          <div className="flex items-center justify-center">
+            <div className="text-sm">
+              <span className="text-gray-600">Don't have an account?</span>{" "}
+              <a
+                href="/signup"
+                className="font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200"
+              >
+                Sign up now
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

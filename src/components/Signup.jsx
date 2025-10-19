@@ -36,64 +36,99 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-amber-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow w-full max-w-md"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-neutral-800">Sign Up</h2>
-        {error && <div className="mb-4 text-red-600">{error}</div>}
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-          className="w-full mb-4 p-2 border rounded"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          className="w-full mb-4 p-2 border rounded"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          className="w-full mb-4 p-2 border rounded"
-          required
-        />
-        <select
-          name="role"
-          value={form.role}
-          onChange={handleChange}
-          className="w-full mb-6 p-2 border rounded bg-white"
-          required
-        >
-          <option value="student">Student</option>
-          <option value="teacher">Faculty</option>
-          <option value="admin">Admin</option>
-        </select>
-        <button
-          type="submit"
-          className="w-full bg-amber-500 text-white py-2 rounded hover:bg-amber-600 transition"
-        >
-          Sign Up
-        </button>
-        <div className="mt-4 text-center">
-          Already have an account?{" "}
-          <a href="/login" className="text-amber-600 underline">
-            Login
-          </a>
-        </div>
-      </form>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-800">
+            Create Account
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Join us to start learning
+          </p>
+          </div>
+          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          {error && (
+            <div className="rounded-xl bg-white p-4 shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)]">
+              <div className="flex">
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">{error}</h3>
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="space-y-6">
+            <div className="rounded-xl bg-gray-100 p-2 shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)]">
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={form.name}
+                onChange={handleChange}
+                className="w-full rounded-lg bg-gray-200 border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-gray-500"
+                required
+              />
+            </div>
+            <div className="rounded-xl bg-gray-100 p-2 shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)]">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email address"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full rounded-lg bg-gray-200 border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-gray-500"
+                required
+              />
+            </div>
+            <div className="rounded-xl bg-gray-100 p-2 shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)]">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={form.password}
+                onChange={handleChange}
+                className="w-full rounded-lg bg-gray-200 border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-gray-500"
+                required
+              />
+            </div>
+            <div className="rounded-xl bg-gray-100 p-2 shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)]">
+              <select
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                className="w-full rounded-lg bg-gray-200 border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-500 focus:outline-none appearance-none cursor-pointer focus:ring-0 focus:border-gray-500"
+                required
+              >
+                <option value="student">Student</option>
+                <option value="teacher">Faculty</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="group relative flex w-full justify-center rounded-xl bg-gray-600 px-4 py-3 text-sm font-medium text-white 
+            shadow-[-5px_-5px_10px_rgba(255,255,255,0.8),5px_5px_10px_rgba(0,0,0,0.1)] 
+            hover:bg-gray-700 hover:shadow-[-2px_-2px_5px_rgba(255,255,255,0.8),2px_2px_5px_rgba(0,0,0,0.1)] 
+            active:shadow-[inset_-2px_-2px_5px_rgba(255,255,255,0.8),inset_2px_2px_5px_rgba(0,0,0,0.1)] 
+            transition-all duration-200"
+          >
+            Create Account
+          </button>
+
+          <div className="flex items-center justify-center">
+            <div className="text-sm">
+              <span className="text-gray-600">Already have an account?</span>{" "}
+              <a
+                href="/login"
+                className="font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200"
+              >
+                Sign in
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
