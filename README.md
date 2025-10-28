@@ -58,7 +58,7 @@ git clone https://github.com/AnubhabR/Flexi-Web.git
 cd Flexi-Web
 
 # Install dependencies
-npm install
+npm install -y
 
 # Create environment variables
 # Example: .env file
@@ -66,15 +66,13 @@ npm install
 
 # Start the development server
 npm run dev
+
+#open a new terminal
+cd server
+
+#start backend
+npm start
 ```
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-The production-ready build will be created in the `dist/` or `build/` directory.
 
 ---
 
