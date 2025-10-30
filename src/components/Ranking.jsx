@@ -235,7 +235,7 @@ const Ranking = () => {
         <div className="flex justify-center items-end space-x-2 sm:space-x-4 overflow-x-auto px-2">
           {rankings.slice(0, 3).map((user, index) => {
             const rank = index + 1;
-            const heights = ["h-28 sm:h-40", "h-36 sm:h-48", "h-24 sm:h-36"]; // 2nd, 1st, 3rd
+            const heights = ["h-28 sm:h-40", "h-36 sm:h-35", "h-24 sm:h-30"]; // 2nd, 1st, 3rd
             const orders = [1, 0, 2]; // Reorder to put 1st in middle
             const actualIndex = orders.indexOf(index);
 
